@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.BorderLayout;
+
 
 public class Main {
 
@@ -7,23 +9,28 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame window = new JFrame("Instructions Example");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
+        window.setLocationRelativeTo(null);
+        window.setLayout(new BorderLayout());
 
-        Instructions instructionsPanel = new Instructions(() -> openGameWindow(window));
+        menuPanel menuPanel = new menuPanel(WINDOW_WIDTH, WINDOW_HEIGHT, difficulty -> {
 
-        window.add(instructionsPanel);
+            GamePanel gamePanel = new GamePanel(difficulty);
+
+            // change the window content
+            window.getContentPane().removeAll();
+            window.add(gamePanel, BorderLayout.CENTER);
+            window.revalidate();
+            window.repaint();
+
+        });
+
+        window.add(menuPanel, BorderLayout.CENTER);
+
         window.setVisible(true);
+
     }
 
-
-    private static void openGameWindow(JFrame oldFrame) {
-        oldFrame.dispose();
-
-        JFrame GameFrame = new JFrame("Game");
-        GameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        GameFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        GameFrame.add(new GamePanel());
-        GameFrame.setVisible(true);
-    }
 }
