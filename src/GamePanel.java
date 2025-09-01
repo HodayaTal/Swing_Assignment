@@ -11,8 +11,7 @@ public class GamePanel extends JPanel {
 
         scenePanel = new ScenePanel(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 
-        // אפשר להוסיף כאן לוגיקה לפי difficulty
-        // לדוגמה: לשלוט במהירות הכדור או מספר כדורים
+
         switch (difficulty.toLowerCase()) {
             case "easy":
 
@@ -36,10 +35,8 @@ public class GamePanel extends JPanel {
         }
 
 
-        // מוסיפים את ScenePanel לפאנל
         this.add(scenePanel);
 
-        // מתחילים את לולאת המשחק של ScenePanel
         scenePanel.requestFocus();
         scenePanel.setFocusable(true);
     }

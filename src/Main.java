@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.BorderLayout;
-
 
 public class Main {
 
@@ -8,29 +6,34 @@ public class Main {
     public static final int WINDOW_HEIGHT = 600;
 
     public static void main(String[] args) {
-        JFrame window = new JFrame("Instructions Example");
-        window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setLocationRelativeTo(null);
-        window.setLayout(new BorderLayout());
+        JFrame instructionsFrame = new JFrame("Instructions");
+        instructionsFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        instructionsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        instructionsFrame.setResizable(false);
+        instructionsFrame.setLocationRelativeTo(null);
 
-        menuPanel menuPanel = new menuPanel(WINDOW_WIDTH, WINDOW_HEIGHT, difficulty -> {
+        Instructions instructionsPanel = new Instructions(() -> {
+            instructionsFrame.dispose();
 
-            GamePanel gamePanel = new GamePanel(difficulty);
+            JFrame menuFrame = new JFrame();
+            menuFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+            menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            menuFrame.setResizable(false);
+            menuFrame.setLocationRelativeTo(null);
 
-            // change the window content
-            window.getContentPane().removeAll();
-            window.add(gamePanel, BorderLayout.CENTER);
-            window.revalidate();
-            window.repaint();
+            menuPanel menuPanel = new menuPanel(WINDOW_WIDTH, WINDOW_HEIGHT, difficulty -> {
+                GamePanel gamePanel = new GamePanel(difficulty);
+                menuFrame.getContentPane().removeAll();
+                menuFrame.add(gamePanel);
+                menuFrame.revalidate();
+                menuFrame.repaint();
+            });
 
+            menuFrame.add(menuPanel);
+            menuFrame.setVisible(true);
         });
 
-        window.add(menuPanel, BorderLayout.CENTER);
-
-        window.setVisible(true);
-
+        instructionsFrame.add(instructionsPanel);
+        instructionsFrame.setVisible(true);
     }
-
 }
